@@ -1,2 +1,2 @@
 # WebGL-presentation
-Чтобы посмотреть презентацию нажмите [сюда](https://meta1-heart.github.io/WebGL-presentation/index.html#)
+Чтобы посмотреть презентацию нажмите [сюда](https://github.com/meta1-heart/WebGL-presentation/blob/master/index.html)
