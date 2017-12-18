@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+		<title>Визуализация на JavaScript</title>
+
+		<meta name="description" content="Презентация о том, что такое графика и немного больше">
+		<meta name="author" content="Бородин Николай">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/moon.css" id="theme">
+		
+		<!-- Для подстветки синтаксиса -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Каждый блок <section> - это отдельный слайд -->
+			<div class="slides">
+				<section>
+					<h2>Визуализация в браузерах</h2>
+					<h3>JavaScript & WebGL</h3>
+				</section>
+
+				<section>
+					<section>
+						<p>
+							WebGL предоставляет веб-разаботчикам доступ к низкоуровневым средствам работы с графическим процессором (GPU).
+						</p>
+						<p>
+								<img src = "D:\HTML.CSS\images\webgl.jpg" width="100%">
+						</p>
+					</section>
+					<section>
+							<p>
+								Предназначен для рисования и отображения интерактивной 2D- и 3D-графики в веб-браузерах. При этом для работы с данной технологией не требуются сторонние плагины или библиотеки.
+							</p>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						Раньше рендерил CPU и выглядело это так:
+						<p>
+							<img src = "D:\HTML.CSS\images\CPU.gif" width="100%">
+						</p>
+					</section>
+					<section>
+						Теперь, с помощью WebGL мы имеем возможность использовать видеокарту:
+					<p>
+						<img src = "D:\HTML.CSS\images\GPU.gif" width="100%">
+					</p>
+					</section>
+				</section>
+
+
+				<section data-background="#5b1919">
+					<a href="https://caniuse.com/#search=WebGL">Can I use WebGL?</a>
+				</section>
+
+				<section>
+					<section>
+						<p>Чистый WebGL требует написания большого количества кода,
+							в основном, подготовительного характера. И чтобы облегчить труд программистов,
+							создано большое количество библиотек, как общего назначения, так и библиотек-движков.
+						</p>
+					</section>
+
+					<section>
+						<ul>
+							<li>
+								<a href="https://threejs.org">three.js</a>
+							</li>
+
+							<li>
+									<a href="http://www.babylonjs.com/">babylon.js</a>
+							</li>
+
+							<li>
+								<a href="http://www.cannonjs.org/">canon.js</a>
+							</li>
+
+							<li>
+								<a href="https://tonejs.github.io/">tone.js</a>
+							</li>
+
+							<li>
+								<a href="http://www.senchalabs.org/philogl/">PhiloGL</a>
+							</li>
+							<li>
+									<a href="https://github.com/drojdjou/J3D">J3D</a>
+							</li>
+						</ul>
+					</section>
+				</section>
+
+				<section data-background = "#195b3c">
+					<section>
+						<img src = "D:\HTML.CSS\images\graphic.jpg" width="88%">
+					</section>
+
+					<section>
+						<img src = "D:\HTML.CSS\images\unreal.jpg" width="100%">
+					</section>
+
+					<section>
+							<img src = "D:\HTML.CSS\images\vors.jpg" width="50%">
+					</section>
+					
+				</section>
+					
+				<section data-background = "#ffffff">
+					<section>
+						<img src = "D:\HTML.CSS\images\dolphin.jpg" width="100%">	
+					</section>
+
+					<section>
+						<ul>
+								<li>
+									<a href="https://jayweeks.com/medusae/">Medusae</a>
+								</li>
+	
+								<li>
+										<a href="http://armsglobe.chromeexperiments.com/">Arms Globe</a>
+								</li>
+	
+								<li>
+									<a href="http://madebyevan.com/webgl-water/">Water</a>
+								</li>
+
+						</ul>
+					</section>	
+				</section>
+				
+				<section>
+					<section>
+						Шейдеры
+						<img src = "D:\HTML.CSS\images\minecraft.jpg" width="100%">
+					</section>
+
+					<section>
+							Шейдер — это программа, выполняемая на видеокарте и использующая
+							язык GLSL(OpenGL Shading Language) — язык высокого уровня для программирования шейдеров.
+							Синтаксис языка базируется на языке программирования ANSI C.
+							<pre><code data-trim contenteditable>
+<script id = "shader-vs" type="x-shader/x-vertex">
+
+	attribute vec3 aVertexPosition;
+	void main() {
+
+	gl_Position = vec4(aVertexPosition, 1.0);
+	}
+
+</script>
+							</code></pre>	
+					</section>
+					
+					<section>
+							<h4>Вершинный Шейдер</h4>
+							Заменяет часть графического конвейера,
+							выполняющего преобразования, связанные с данными вершин.
+							Такие как умножение вершин и нормалей на матрицу проекции и моделирования,
+							установка цветов вершин, установка материалов освещения.
+							Он работает для каждой отрисованной вершины.
+								
+					</section>
+
+					<section>
+						<h4>Фрагментный Шейдер</h4>
+						Заменяет часть графического ковейера, обрабатывая каждый полученный
+						 на предыдущих стадиях фрагмент (не пиксель). Обработка может включать такие
+						  стадии, как получение данных из текстуры, просчет освещения, просчет смешивания.							
+					</section>
+
+					<section >
+						Если вершинный шейдер определяет геометрию фигуры, то фрагментный — её цвет.
+						<img src = "D:\HTML.CSS\images\pyramid.jpg" width="100%">
+						<a href="file:///D:/HTML.CSS/WebGLdemo(pulsation).html">SimpleShaderDemo</a>
+					</section>
+
+				</section>
+
+
+				<section>
+						<section>
+							Графический конвейер
+							<img src = "D:\HTML.CSS\images\conveer.jpg" width="100%">
+						</section>
+						
+						<section>
+							<ul>
+									<li>
+											<a href="http://glslsandbox.com/e#43983.0">Lines</a>
+									</li>
+
+									<li>
+										<a href="https://www.shadertoy.com/view/XsBXDc">Sunrise</a>
+									</li>
+		
+									<li>
+											<a href="https://www.shadertoy.com/view/lty3Rt">Pegasus Galaxy</a>
+									</li>
+		
+									<li>
+										<a href="http://glslsandbox.com/e#44119.0">Energy Ball</a>
+									</li>
+	
+							</ul>
+						</section>
+				</section>
+
+				<section data-background = "#195b3c">
+					
+					<section>
+					Приемущества	
+					</section>
+					<section>
+							Поскольку WebGL для рендеринга графики использует графический процессор на видеокарте (GPU),
+							то для этой технологии характерна высокая производительность, которая сравнима с производительностью нативных приложений
+					</section>
+					<section>
+							Для создания приложений разработчики могут использовать стандартные для веб-среды
+							 технологии HTML/CSS/JavaScript и при этом также применять аппаратное ускорение графики
+					</section>
+					<section>
+						Кроссбраузерность и отсутствие привязки к определенной платформе. Windows, MacOS, Linux - все это не важно, главное, чтобы браузер поддерживал WebGL
+					</section>
+
+						
+				</section>
+				
+				<section data-background="#5b1919">
+					
+					<section>Недостатки
+							
+					</section>
+
+					<section>
+							Специалисты по вопросами безопасности британской компании Context выявили, что
+							 злоумышленник может на вредоносном сайте разместить код WebGL, который может быть напрямую
+							 передан в графический процессор, в результате чего компьютер просто выключится 
+							 — тем самым можно организовать DoS атаку на компьютеры пользователей
+					</section>
+					<section>
+							Эту же уязвимость можно использовать для создания полноценных троянских программ. 
+							Для этого необходимо использовать технологии, позволяющие выполнять обычный код
+							 на графических ядрах — такие, как OpenCL или NVIDIA CUDA.
+					</section>
+
+				</section>
+			<section data-background="#7e654d">
+				<section id="fragments">
+					<p> Где и как всё это можно использовать?</p>
+					<img src = "D:\HTML.CSS\images\think.jpg" width="50%" class = "fragment">
+				</section>
+
+				<section>
+						<ul>
+							
+								<li>
+										<a href="http://www.larsberg.net/">Larsberg</a>
+								</li>
+
+								<li>
+										<a href="http://radio.garden/live/riyadh/star-ksa/">World Radio</a>
+								</li>
+
+								<li>
+									<a href="https://www.meteorshowers.org/view/iau-20">Meteors</a>
+								</li>
+	
+								<li>
+										<a href="https://www.cubeslam.com/yenotk">Aerohockey</a>
+								</li>
+	
+								<li>
+									<a href="http://showroom.littleworkshop.fr/">Show room</a>
+								</li>
+
+								<li>
+										<a href="http://carvisualizer.plus360degrees.com/threejs/">Car visualizer</a>
+								</li>
+						</ul>
+				</section>
+			
+			</section>
+			
+			<section>
+					<section>
+							WebAssembly - эффективный низкоуровневый байт-код, предназначенный для исполнения в браузере
+					</section>
+					
+					<section>
+						JavaScript: Можно реализовать все критичные вещи на WebAssembly и импортировать его как стандартный JavaScript модуль
+					</section>
+					
+					<section>
+						Язык: WebAssembly определяет абстрактное синтаксическое дерево
+						в бинарном формате. Вы можете писать код и чистить его от ошибок в
+						текстовом формате. WebAssembly при этом легко читаем
+					</section>
+
+					<section>
+						Браузеры: Браузеры будут понимать бинарный формат, а это значит,
+						что разработчики смогут компилировать бинарники, которые можно сжать гораздо больше,
+						чем используемые сегодня текстовые файлы с JavaScript. Чем меньше файл, тем быстрее загрузка.
+						В зависимости от возможностей оптимизации времени компиляции, 
+						код на WebAssembly может передаваться и запускаться быстрее, чем на JavaScript
+					</section>
+
+					<section>
+						Компиляция: Возможность другим языкам, получить первоклассную двоичную поддержку через весь стек веб-платформы <br>
+						<a href="https://habrahabr.ru/post/261205/">Хотите знать больше?</a>
+					</section>
+				<section>
+					<a href="https://s3.amazonaws.com/mozilla-games/ZenGarden/EpicZenGarden.html">Epic Zen Garden</a>
+				</section>
+			</section>
+			
+			<section>
+				<b>Благодарю за внимание!</b>
+			</section>
+		
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme,
+				transition: Reveal.getQueryHash().transition || 'cube',
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+		</script>
+	</body>
+</html>
