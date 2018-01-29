@@ -1,0 +1,103 @@
+<html>
+<head>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r71/three.min.js"></script>
+	<style>
+		/* Чтобы сцена полностью была в окне */
+		body { margin: 0; }
+	</style>
+</heda>
+<body>
+        <script id="fragShader" type="shader-code">
+                uniform vec2 res;
+                uniform vec3 light;
+                uniform sampler2D norm;
+                void main() {
+                vec2 pixel = gl_FragCoord.xy / res.xy;
+                vec3 NormalVector = texture2D(norm, pixel).xyz;
+                vec3 LightVector = vec3(light.x - gl_FragCoord.x,light.y - gl_FragCoord.y, 100.0); 
+                NormalVector.x -= 0.5;
+                NormalVector.y -= 0.5;
+                NormalVector = normalize(NormalVector);
+                LightVector = normalize(LightVector);
+                vec4 color = vec4(1.0);
+                 // Расстояние от текущего пикселя до источника света
+                 float dist = distance(gl_FragCoord.xy,light.xy);
+                 float diffuse = max(dot( NormalVector, LightVector ),0.0); // Скалярное произведение
+                 float distanceFactor = (1.0 - dist/(light.z * res.x));
+                 // Проверяем, находится ли пиксель внутри радиуса
+                 if(light.z * res.x > dist){
+                    gl_FragColor = color * diffuse * distanceFactor;
+                 } else {
+                    gl_FragColor = 0.005 * color * diffuse;
+                 }
+                }
+            </script>
+
+	<script>
+var scene;
+var camera;
+var renderer;
+
+function scene_setup(){
+  //This is all code needed to set up a basic ThreeJS scene
+
+  //First we initialize the scene and our camera
+  scene = new THREE.Scene();
+  camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+
+  //We create the WebGL renderer and add it to the document
+  renderer = new THREE.WebGLRenderer();
+  renderer.setSize( window.innerWidth, window.innerHeight );
+  document.body.appendChild( renderer.domElement );
+}
+
+//Initialize the Threejs scene
+scene_setup();
+
+//Pull the shader code from the html
+var shaderCode = document.getElementById("fragShader").innerHTML;
+
+//Allows us to load an external image
+THREE.ImageUtils.crossOrigin = '';
+
+// Load normal map
+var normalURL = "https://raw.githubusercontent.com/tutsplus/Beginners-Guide-to-Shaders/master/Part3/normal_maps/normal_test.jpg"
+var normal = THREE.ImageUtils.loadTexture(normalURL);
+
+
+var uniforms = {
+  //Добавляем переменную источника света
+  norm: {type:'t', value:normal},
+  light: {type:'v3', value:new THREE.Vector3()},
+  res : {type: 'v2',value:new THREE.Vector2(window.innerWidth,window.innerHeight)}// Хранит разрешение
+}
+
+// Радиус 
+uniforms.light.value.z = 0.2;
+
+document.onmousemove = function(event){
+	// Обновляем источник света, чтобы он следовал за мышью
+	uniforms.light.value.x = event.clientX; 
+    uniforms.light.value.y = window.innerHeight - event.clientY;
+}
+
+//We stick our shader onto a 2d plane big enough to fill the screen
+var material = new THREE.ShaderMaterial({uniforms:uniforms,fragmentShader:shaderCode})
+var geometry = new THREE.PlaneGeometry( 10, 10 );
+var sprite = new THREE.Mesh( geometry, material );
+//Add it to the scene
+scene.add( sprite );
+//Move the camera back so we can see it
+camera.position.z = 1;
+
+
+//Render everything!
+function render() {
+  requestAnimationFrame( render );
+  renderer.render( scene, camera );
+}
+render();
+        
+    </script>
+</body>
+</html>
